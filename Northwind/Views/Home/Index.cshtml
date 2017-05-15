@@ -1,0 +1,54 @@
+﻿@using Northwind.Models
+@model IEnumerable<DiscountDTO>
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<div class="jumbotron">
+    <h1>N<i class="fa fa-compass"></i>rthwind</h1>
+    <p class="lead">
+        We have the best prices and selection of high quality foods & beverages on the
+        Planet. Check out our featured discounts below.
+    </p>
+    <p><a href="#" class="btn btn-primary btn-lg">Place your order now &raquo;</a></p>
+</div>
+
+<div class="row" id="discounts">
+    @{
+            int i = 0;
+            foreach (DiscountDTO d in @Model)
+            {
+            <div class="col-sm-4" id="@i">
+                <h2 class="font-md" id="Title_@i">@d.Title</h2>
+                <hr class="hr-special" />
+                <p id="Description_@i">
+                    @d.Description
+                </p>
+                <p><i>Discount Expires: <span id="EndTime_@i">@string.Format("{0:MM/dd/yyyy}", @d.EndTime)</span></i></p>
+                <a id="Code_@i" class="special" data-container="body" data-toggle="popover" data-placement="right" data-content="@d.Code">
+                    <i class="fa fa-hand-o-right"></i> Discount Code
+                </a>
+            </div>
+            i += 1;
+        }
+    }
+</div>
+<a href="~/Cart/ViewCart" class="navbar-brand"><i class="fa fa-hand-o-right"></i> View Cart</a>
+
+<hr />
+
+<div>
+    <a href="~/Product/Discount" class="font-md"><i class="fa fa-tag"></i> See all Discounts</a>
+</div>
+
+<link href="~/Content/animate.css" rel="stylesheet" />
+
+@section scripts
+{
+    <script>
+      $(function () {
+          $('[data-toggle="popover"]').popover();
+      });
+    </script>
+}

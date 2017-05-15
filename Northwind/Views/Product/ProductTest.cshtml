@@ -1,0 +1,18 @@
+﻿@using Northwind.Models
+@model IEnumerable<Product>
+@{
+    ViewBag.Title = "ProductTest";
+}
+
+<div class="font-md">Product Categories</div>
+<!-- List group -->
+<div class="list-group">
+    @foreach (Product p in @Model)
+    {
+        <a href="~/Product/Product/@p.ProductID" class="list-group-item"><strong>@p.ProductName</strong></a>
+    }
+</div>
+
+<div class="font-md">
+    <a href="~/Home/Index"><i class="fa fa-home"></i> Home</a>
+</div>

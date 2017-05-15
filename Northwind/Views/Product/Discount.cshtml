@@ -1,0 +1,39 @@
+﻿@using Northwind.Models
+@model IEnumerable<Discount>
+
+@{
+    ViewBag.Title = "Discounts";
+}
+
+<div class="font-lg">
+    All Discounts
+</div>
+
+<ul class="list-group">
+    @foreach (Discount d in @Model)
+    {
+        <li class="list-group-item">
+            <h4 class="list-group-item-heading">@d.Title</h4>
+            <p class="list-group-item-text">
+                @d.Description
+                <h5><i>Discount Expires: @string.Format("{0:MM/dd/yyyy}", @d.EndTime)</i></h5>
+                <a class="special" data-container="body" data-toggle="popover" data-placement="right" data-content="@d.Code">
+                    <i class="fa fa-hand-o-right"></i> Discount Code
+                </a>
+            </p>
+        </li>
+    }
+</ul>
+
+<div class="font-md">
+    <a href="~/Home/Index"><i class="fa fa-home"></i> Home</a>
+</div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+}
