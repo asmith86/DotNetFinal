@@ -1,0 +1,39 @@
+﻿@using Northwind.Models
+@model Customer
+
+@{
+    ViewBag.Title = "CompleteOrder";
+    int CustomerID = Request.IsAuthenticated ? Convert.ToInt32(User.Identity.Name) : -1;
+}
+
+
+
+<h2>Order Summary</h2>
+
+
+
+
+<ul>
+    @{
+       
+        var orders = Session["orders"] as List<Order_Detail>;
+        var total = 0.00m;
+        foreach (Order_Detail od in orders)
+        {
+            total += (od.Quantity * od.UnitPrice);
+         
+         
+            <li>Product: @od.Product.ProductName</li>
+            <li>Quantity: @od.Quantity</li>
+            <li>Unit Price : @od.UnitPrice.ToString("C")</li>
+
+        }
+        
+    }
+
+
+</ul>
+<h2>Total @total.ToString("C")</h2>
+
+<input type="button" class="btn-default" value="Confirm Order" onclick="location.href='@Url.Action("ThankYou", "Cart", new { id = CustomerID })'" />
+

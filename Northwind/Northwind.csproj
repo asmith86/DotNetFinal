@@ -177,6 +177,7 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderDetailsDTO.cs" />
     <Compile Include="Models\Order_Detail.cs">
       <DependentUpon>NorthwindModel.tt</DependentUpon>
     </Compile>
@@ -226,6 +227,7 @@
     </EntityDeploy>
     <Content Include="Models\NorthwindModel.edmx.diagram">
       <DependentUpon>NorthwindModel.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\jsgnorthwind.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -240,6 +242,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\userDataValidation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -263,6 +266,8 @@
     <Content Include="Views\Home\SignedOut.cshtml" />
     <Content Include="Views\Cart\ViewCart.cshtml" />
     <Content Include="Views\Product\ProductTest.cshtml" />
+    <Content Include="Views\Cart\CompleteOrder.cshtml" />
+    <Content Include="Views\Cart\ThankYou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

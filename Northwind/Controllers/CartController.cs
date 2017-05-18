@@ -8,7 +8,86 @@ namespace Northwind.Controllers
 {
     public class CartController : Controller
     {
+       public void AddOrder(Order_Detail od)
+        {
+            using(NORTHWNDEntities db = new NORTHWNDEntities())
+            {
+                if (od.Product.Discontinued)
+                {
+                    var discount = db.Discounts.Single(d => d.ProductID == od.ProductID);
+                    od.Discount = (decimal) discount.DiscountPercent;
 
+                }
+
+                db.Order_Details.Add(od);
+                db.SaveChanges();
+            }
+            
+        }
+
+           
+
+        public ActionResult CompleteOrder(int id)
+        {
+            
+            
+            List<Order_Detail> orderList = new List<Order_Detail>();
+            Customer cust = null;
+
+            using (NORTHWNDEntities db = new NORTHWNDEntities())
+            {
+                 cust = db.Customers.Single(c => c.CustomerID == id);
+
+                var cartList = db.Carts.Where(c => c.CustomerID == id);
+
+
+                foreach (Cart c in cartList)
+                {
+
+
+
+                    Order_Detail od = new Order_Detail();
+                    od.Product = c.Product;
+                    od.Quantity = (short)c.Quantity;
+                    od.UnitPrice = (decimal)c.Product.UnitPrice;
+                    orderList.Add(od);
+
+
+                    CartDTO cart = new CartDTO();
+                    cart.CustomerID = (int)c.CustomerID;
+                    cart.ProductID = (int)c.ProductID;
+                    cart.Quantity = (int)c.Quantity;
+                    this.RemoveFromCart(cart);
+
+
+                   
+
+
+
+                }
+
+             
+
+            }
+
+            Session["orders"] = orderList;
+            return View();
+        }
+
+        public ActionResult Test()
+        {
+            List<OrderDetailsDTO> orderDetails = new List<OrderDetailsDTO>();
+            using (NORTHWNDEntities db = new NORTHWNDEntities())
+            {
+                Order_Detail od = new Order_Detail();
+
+
+            }
+                
+            
+
+            return new EmptyResult();
+        }
 
         public ActionResult ViewCart()
         {
@@ -151,12 +230,6 @@ namespace Northwind.Controllers
 
 
 
-            //using (NORTHWNDEntities db = new NORTHWNDEntities())
-            //{
-            //    // add the product to the customer’s cart
-            //    db.Carts.Add(sc);
-            //    db.SaveChanges();
-            //}
 
             using (NORTHWNDEntities db = new NORTHWNDEntities())
             {
@@ -181,10 +254,32 @@ namespace Northwind.Controllers
                     db.Carts.Add(sc);
                 }
                 db.SaveChanges();
-                System.Threading.Thread.Sleep(1500);
+               // System.Threading.Thread.Sleep(1500);
             }
 
             return Json(sc, JsonRequestBehavior.AllowGet);
         }
+
+
+
+        public ActionResult ThankYou(int id)
+        {
+            Customer cust = null;
+            using (NORTHWNDEntities db = new NORTHWNDEntities())
+            {
+                cust = db.Customers.Single(c => c.CustomerID == id);
+            }
+
+            ViewBag.CompanyName = cust.CompanyName;
+            ViewBag.CustName = cust.ContactName;
+            ViewBag.address = cust.Address;
+            ViewBag.city = cust.City;
+            ViewBag.state = cust.Region;
+            ViewBag.zip = cust.PostalCode;
+
+            return View();
+        }
+       
+       
     }
 }

@@ -1,0 +1,29 @@
+﻿@using Northwind.Models
+
+@{
+    ViewBag.Title = "ThankYou";
+}
+
+
+<h2>@ViewBag.custName, here is a summary of your order:</h2>
+
+<ul>
+    @{
+
+        var products = Session["orders"] as List<Order_Detail>;
+        decimal total = 0.00m;
+        foreach (Order_Detail od in products)
+        {
+            total += (decimal) (od.Quantity * od.Product.UnitPrice);
+            <li>@String.Format("{0} {1}", od.Quantity, od.Product.ProductName)</li>
+        }
+    }
+</ul>
+
+<p>As soon as the payment of @total.ToString("C") is received, we will send the items to: </p>
+
+@ViewBag.custName
+@ViewBag.address <br />
+@ViewBag.city, @ViewBag.state @ViewBag.zip
+
+<h2>Thank You!!</h2>
