@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+     int CustomerID = Request.IsAuthenticated ? Convert.ToInt32(User.Identity.Name) : -1;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,9 +16,13 @@
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css' />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <!--Bootswatch CDN-->
+    <!--
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css" rel="stylesheet" integrity="sha384-RpX8okQqCyUNG7PlOYNybyJXYTtGQH+7rIKiVvg1DLg6jahLEk47VvpUyS+E2/uJ" crossorigin="anonymous">
+    -->
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
+    <div id="theNavBar" class="navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -64,10 +72,10 @@
                 @if (Request.IsAuthenticated)
                 {
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="~/Cart/ViewCart/@CustomerID"><i class="fa fa-shopping-cart" aria-hidden="true"></i> View Cart</a></li>
                         <li><a href="~/Home/SignOut"><i class="fa fa-sign-out"></i> Sign Out</a></li>
                     </ul>
                 }
-
             </div>
         </div>
     </div>
@@ -75,7 +83,7 @@
         @RenderBody()
     </div>
 
-   
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

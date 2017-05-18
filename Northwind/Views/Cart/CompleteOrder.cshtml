@@ -38,5 +38,5 @@
 </ul>
 <h2>Total @total.ToString("C")</h2>
 
-<input type="button" class="btn-default" value="Confirm Order" onclick="location.href='@Url.Action("ThankYou", "Cart", new { id = CustomerID })'" />
+<input type="button"  id="confirmBtn" class="btn-default" value="Confirm Order" onclick="location.href='@Url.Action("ThankYou", "Cart", new { id = CustomerID })'" />
 

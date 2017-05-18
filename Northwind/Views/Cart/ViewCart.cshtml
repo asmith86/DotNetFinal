@@ -10,20 +10,20 @@
 <table class="table table-hover table-responsive">
     <thead>
         <tr class="font-md">
-           
+           <th>Item</th>
+            <th class="text-right">Quantity</th>
             <th class="text-right">Price</th>
-            <th class="text-right">Stock</th>
         </tr>
     </thead>
     <tbody id="products">
         @foreach (CartData cd in Model)
         {
             <tr class="product-row" id="@cd.ProductID">
-                <td><span id="name_@cd.ProductID">@cd.ProductName</span> (@cd.Quantity)</td>
+                <td><span id="name_@cd.ProductID">@cd.ProductName</span></td>
+                <td class="text-right">@cd.Quantity </td>
                 <td class="text-right">
-                    $<span id="price_@cd.ProductID">@string.Format("{0:n2}", cd.UnitPrice)</span>
+                 $<span id="price_@cd.ProductID">@string.Format("{0:n2}", cd.UnitPrice)</span>
                 </td>
-                <td class="text-right">@cd.UnitsInStock</td>
             </tr>
         }
     </tbody>
@@ -112,6 +112,7 @@
                                    data[i].UnitPrice.toFixed(2) + "</span></td>";
                                    str += "<td class='text-right'>" + data[i].UnitsInStock + "</td>";
                                    str += "</tr>";
+                                   str += "testing ajax!"
                                    $('#products').append(str);
                                }
                                showModelCount(data.length);
@@ -306,6 +307,10 @@
             }
         });
     </script>
-
+    <script>
+        $("#myModal").draggable({
+            handle: ".modal-header"
+        });
+    </script>
 }
 
