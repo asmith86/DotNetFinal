@@ -190,7 +190,7 @@
                         console.log("Http response: " + data.statusText);
                     }
 
-                    URL = "@Url.Content("~")Cart/RefreshCart";
+                    URL = "@Url.Content("~")Cart/RefreshCart/@CustomerID";
 
                     $.getJSON(URL)
                        .always(function (data, textStatus, statusObject) {

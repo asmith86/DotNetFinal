@@ -53,7 +53,14 @@ namespace Northwind.Controllers
                     od.UnitPrice = (decimal)c.Product.UnitPrice;
                     
                     var discount = db.Discounts.FirstOrDefault(d => d.ProductID == od.Product.ProductID);
-                    od.Discount = (decimal)discount.DiscountPercent;
+                    if(discount == null)
+                    {
+                        od.Discount = 0.0m;
+                    } else
+                    {
+                        od.Discount = (decimal)discount.DiscountPercent;
+                    }
+                   
 
                     
                     orderList.Add(od);
@@ -82,7 +89,7 @@ namespace Northwind.Controllers
 
        
 
-        public ActionResult ViewCart()
+        public ActionResult ViewCart(int id)
         {
             using (NORTHWNDEntities db = new NORTHWNDEntities())
             {
@@ -92,6 +99,7 @@ namespace Northwind.Controllers
                 var carts = db.Carts
                     .Include(p => p.Product)
                     .Include(c => c.Customer)
+                    .Where(c => c.CustomerID == id)
                     .ToList();
 
                 foreach(Cart c in carts)
@@ -115,7 +123,7 @@ namespace Northwind.Controllers
 
         }
 
-        public JsonResult RefreshCart()
+        public JsonResult RefreshCart(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -131,6 +139,7 @@ namespace Northwind.Controllers
                 var carts = db.Carts
                     .Include(p => p.Product)
                     .Include(c => c.Customer)
+                    .Where(c => c.CustomerID == id)
                     .ToList();
 
                 foreach (Cart c in carts)
