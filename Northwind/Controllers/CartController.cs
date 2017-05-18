@@ -8,6 +8,7 @@ namespace Northwind.Controllers
 {
     public class CartController : Controller
     {
+        //This is broken. problem with key relationships
        public void AddOrder(Order_Detail od)
         {
             using(NORTHWNDEntities db = new NORTHWNDEntities())
@@ -50,6 +51,11 @@ namespace Northwind.Controllers
                     od.Product = c.Product;
                     od.Quantity = (short)c.Quantity;
                     od.UnitPrice = (decimal)c.Product.UnitPrice;
+                    
+                    var discount = db.Discounts.FirstOrDefault(d => d.ProductID == od.Product.ProductID);
+                    od.Discount = (decimal)discount.DiscountPercent;
+
+                    
                     orderList.Add(od);
 
 
@@ -74,20 +80,7 @@ namespace Northwind.Controllers
             return View();
         }
 
-        public ActionResult Test()
-        {
-            List<OrderDetailsDTO> orderDetails = new List<OrderDetailsDTO>();
-            using (NORTHWNDEntities db = new NORTHWNDEntities())
-            {
-                Order_Detail od = new Order_Detail();
-
-
-            }
-                
-            
-
-            return new EmptyResult();
-        }
+       
 
         public ActionResult ViewCart()
         {

@@ -12,9 +12,12 @@
 
         var products = Session["orders"] as List<Order_Detail>;
         decimal total = 0.00m;
+        decimal discount = 0.00m;
         foreach (Order_Detail od in products)
         {
-            total += (decimal) (od.Quantity * od.Product.UnitPrice);
+            discount = od.UnitPrice * od.Discount;
+            total += (od.UnitPrice * od.Quantity) - (discount * od.Quantity);
+       
             <li>@String.Format("{0} {1}", od.Quantity, od.Product.ProductName)</li>
         }
     }

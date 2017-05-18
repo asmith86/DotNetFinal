@@ -18,14 +18,17 @@
        
         var orders = Session["orders"] as List<Order_Detail>;
         var total = 0.00m;
+        var discount = 0.00m;
         foreach (Order_Detail od in orders)
         {
-            total += (od.Quantity * od.UnitPrice);
+            discount = od.UnitPrice * od.Discount;
+            total += (od.UnitPrice * od.Quantity) - (discount * od.Quantity);
          
          
             <li>Product: @od.Product.ProductName</li>
             <li>Quantity: @od.Quantity</li>
             <li>Unit Price : @od.UnitPrice.ToString("C")</li>
+            <li>Savings per item from discount: @discount.ToString("C") </li>
 
         }
         
